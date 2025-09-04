@@ -1,0 +1,573 @@
+// Variables
+$primary-color: #2563eb;
+$primary-dark: #1d4ed8;
+$secondary-color: #64748b;
+$success-color: #059669;
+$error-color: #dc2626;
+$warning-color: #d97706;
+
+$background-light: #f8fafc;
+$background-white: #ffffff;
+$text-primary: #1e293b;
+$text-secondary: #64748b;
+$text-muted: #94a3b8;
+
+$border-color: #e2e8f0;
+$border-focus: #3b82f6;
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+$border-radius: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+
+// Mixins
+@mixin transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Main Container
+.booking-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+  min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+}
+
+// Header Section
+.booking-header {
+  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+  border-radius: $border-radius-xl;
+  padding: 32px;
+  margin-bottom: 32px;
+  color: white;
+  box-shadow: $shadow-xl;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    transform: translate(-30%, 30%);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+  }
+
+  .header-icon {
+    @include flex-center;
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: $border-radius-lg;
+    font-size: 24px;
+    @include transition();
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .header-text {
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
+    }
+
+    .header-subtitle {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+  }
+}
+
+// Form Wrapper
+.booking-form-wrapper {
+  @include glass-effect;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-xl;
+  overflow: hidden;
+}
+
+.booking-form {
+  padding: 40px;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
+}
+
+// Form Sections
+.form-section {
+  margin-bottom: 40px;
+
+  &:last-of-type {
+    margin-bottom: 32px;
+  }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid $border-color;
+
+  i {
+    color: $primary-color;
+    font-size: 1.125rem;
+  }
+}
+
+// Form Layout
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+// Labels
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+
+  i {
+    color: $primary-color;
+    font-size: 0.75rem;
+    width: 12px;
+  }
+}
+
+// Input Styling
+.input-wrapper {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  color: $text-primary;
+  background: $background-white;
+  @include transition(border-color, box-shadow);
+
+  &::placeholder {
+    color: $text-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $border-focus;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  &.datetime-input {
+    font-family: inherit;
+  }
+
+  &:disabled {
+    background-color: #f1f5f9;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.input-focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, $primary-color, $primary-dark);
+  border-radius: 1px;
+  transform: scaleX(0);
+  @include transition(transform);
+}
+
+.form-input:focus + .input-focus-border {
+  transform: scaleX(1);
+}
+
+// Select Styling
+.select-wrapper {
+  position: relative;
+}
+
+.form-select {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  border: 2px solid $border-color;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  color: $text-primary;
+  background: $background-white;
+  appearance: none;
+  cursor: pointer;
+  @include transition(border-color, box-shadow);
+
+  &:focus {
+    outline: none;
+    border-color: $border-focus;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  option {
+    padding: 12px;
+  }
+}
+
+.select-arrow {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $text-muted;
+  pointer-events: none;
+  @include transition(color);
+}
+
+.form-select:focus ~ .select-arrow {
+  color: $primary-color;
+}
+
+// Price Display
+.price-display {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.1));
+  border: 2px solid rgba(37, 99, 235, 0.2);
+  border-radius: $border-radius-lg;
+  padding: 24px;
+  margin: 32px 0;
+  animation: slideInUp 0.5s ease-out;
+
+  .price-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .price-icon {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background: $primary-color;
+    color: white;
+    border-radius: 50%;
+    font-size: 18px;
+  }
+
+  .price-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .price-label {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    font-weight: 500;
+  }
+
+  .price-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+}
+
+// Error Messages
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $error-color;
+  font-size: 0.875rem;
+  margin-top: 8px;
+  animation: shake 0.5s ease-in-out;
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 2px solid $border-color;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: $border-radius;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  @include transition();
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    @include transition(left);
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  &:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  &:not(:disabled):active {
+    transform: translateY(0);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: white;
+  box-shadow: $shadow-md;
+
+  &:hover:not(:disabled) {
+    box-shadow: $shadow-lg;
+  }
+}
+
+.btn-secondary {
+  background: white;
+  color: $secondary-color;
+  border-color: $border-color;
+
+  &:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: $secondary-color;
+    color: $text-primary;
+  }
+}
+
+// Animations
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .booking-container {
+    max-width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-header {
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .form-section {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+  }
+
+  .form-input,
+  .form-select {
+    padding: 14px 18px;
+  }
+
+  .form-select {
+    padding-right: 45px;
+  }
+
+  .price-display {
+    padding: 20px;
+    margin: 24px 0;
+
+    .price-content {
+      flex-direction: column;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .price-value {
+      font-size: 1.5rem;
+    }
+  }
+
+  .btn {
+    padding: 14px 24px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-container {
+    padding: 16px;
+  }
+
+  .booking-header {
+    padding: 20px;
+
+    .header-text h1 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .booking-form {
+    padding: 20px;
+  }
+
+  .form-input,
+  .form-select {
+    padding: 12px 16px;
+  }
+
+  .form-select {
+    padding-right: 40px;
+  }
+}
+
+// Focus management for accessibility
+.form-input:focus,
+.form-select:focus {
+  z-index: 1;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .form-input,
+  .form-select {
+    border-width: 3px;
+  }
+  
+  .btn {
+    border-width: 3px;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,149 @@
+<div class="booking-container">
+  <div class="booking-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-bed"></i>
+      </div>
+      <div class="header-text">
+        <h1>{{ isEditMode ? 'Edit' : 'Create' }} Booking</h1>
+        <p class="header-subtitle">Manage room reservations efficiently</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-form-wrapper">
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="booking-form">
+      <div class="form-section">
+        <h3 class="section-title">
+          <i class="fas fa-user"></i>
+          Guest Information
+        </h3>
+        
+        <div class="form-group">
+          <label for="userEmail" class="form-label">
+            <i class="fas fa-envelope"></i>
+            Guest Email Address
+          </label>
+          <div class="input-wrapper">
+            <input 
+              type="email" 
+              id="userEmail" 
+              class="form-input" 
+              formControlName="userEmail"
+              placeholder="Enter guest email address">
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">
+          <i class="fas fa-door-open"></i>
+          Room Selection
+        </h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="roomType" class="form-label">
+              <i class="fas fa-tags"></i>
+              Room Type
+            </label>
+            <div class="select-wrapper">
+              <select id="roomType" class="form-select" formControlName="roomTypeId">
+                <option [ngValue]="null">Select Room Type</option>
+                <option *ngFor="let type of roomTypes" [value]="type.id">
+                  {{ type.typeName }} - ₹{{ type.pricePerHour }}/hour
+                </option>
+              </select>
+              <i class="fas fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="room" class="form-label">
+              <i class="fas fa-key"></i>
+              Room Number
+            </label>
+            <div class="select-wrapper">
+              <select id="room" class="form-select" formControlName="roomId">
+                <option value="" disabled>Select Room Number</option>
+                <option *ngFor="let room of filteredRooms" [value]="room.id">
+                  Room {{ room.roomNumber }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">
+          <i class="fas fa-calendar-alt"></i>
+          Booking Schedule
+        </h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startTime" class="form-label">
+              <i class="fas fa-play"></i>
+              Check-in Date & Time
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="datetime-local"
+                id="startTime"
+                class="form-input datetime-input"
+                formControlName="startTime"
+                [min]="isEditMode ? null : minDate">
+              <div class="input-focus-border"></div>
+            </div>
+            <div *ngIf="bookingForm.get('startTime')?.hasError('pastDate')" class="error-message">
+              <i class="fas fa-exclamation-circle"></i>
+              Start date cannot be in the past
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="endTime" class="form-label">
+              <i class="fas fa-stop"></i>
+              Check-out Date & Time
+            </label>
+            <div class="input-wrapper">
+              <input
+                type="datetime-local"
+                id="endTime"
+                class="form-input datetime-input"
+                formControlName="endTime"
+                [min]="isEditMode ? null : minDate">
+              <div class="input-focus-border"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="calculatedPrice !== null && calculatedPrice > 0" class="price-display">
+        <div class="price-content">
+          <div class="price-icon">
+            <i class="fas fa-rupee-sign"></i>
+          </div>
+          <div class="price-details">
+            <span class="price-label">Total Amount</span>
+            <span class="price-value">{{ calculatedPrice | currency:'INR':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="bookingForm.invalid">
+          <i class="fas fa-save"></i>
+          {{ isEditMode ? 'Update Booking' : 'Create Booking' }}
+        </button>
+        <a routerLink="/bookings" class="btn btn-secondary">
+          <i class="fas fa-times"></i>
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

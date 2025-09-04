@@ -1,0 +1,275 @@
+<div class="bookings-container">
+  <!-- Header with Responsive Create Button -->
+  <div class="bookings-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="header-text">
+        <h1>All Bookings</h1>
+        <p class="header-subtitle">Manage and monitor room reservations</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- DESKTOP ONLY: Create Button (Hidden on Mobile) -->
+      <button routerLink="/bookings/new" class="btn btn-primary create-booking-desktop desktop-only">
+        <i class="fas fa-plus"></i>
+        <span class="btn-text"> Create New Booking</span>
+      </button>
+      
+      <!-- MOBILE ONLY: Create Button (Hidden on Desktop) -->
+      <button routerLink="/bookings/new" class="btn btn-primary create-booking-mobile mobile-only">
+        <i class="fas fa-plus"></i>
+        <span class="btn-text"> Create Booking</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-wrapper">
+    <form [formGroup]="filterForm" class="filters-form">
+      <div class="filters-header">
+        <h3 class="filters-title">
+          <i class="fas fa-filter"></i>
+          Filter Bookings
+        </h3>
+      </div>
+      
+      <div class="filters-grid">
+        <div class="form-group">
+          <label for="room" class="form-label">
+            <i class="fas fa-door-open"></i>
+            Room
+          </label>
+          <div class="select-wrapper">
+            <select id="room" class="form-select" formControlName="roomId">
+              <option [ngValue]="null">All Rooms</option>
+              <option *ngFor="let room of rooms" [value]="room.id">
+                Room {{ room.roomNumber }}
+              </option>
+            </select>
+            <i class="fas fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="roomType" class="form-label">
+            <i class="fas fa-tags"></i>
+            Room Type
+          </label>
+          <div class="select-wrapper">
+            <select id="roomType" class="form-select" formControlName="roomTypeId">
+              <option [ngValue]="null">All Types</option>
+              <option *ngFor="let type of roomTypes" [value]="type.id">
+                {{ type.typeName }}
+              </option>
+            </select>
+            <i class="fas fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="startDate" class="form-label">
+            <i class="fas fa-calendar-alt"></i>
+            Start Date
+          </label>
+          <div class="input-wrapper">
+            <input type="date" id="startDate" class="form-input" formControlName="startDate">
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="endDate" class="form-label">
+            <i class="fas fa-calendar-alt"></i>
+            End Date
+          </label>
+          <div class="input-wrapper">
+            <input type="date" id="endDate" class="form-input" formControlName="endDate">
+            <div class="input-focus-border"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-actions">
+        <button type="button" (click)="clearFilters()" class="btn btn-secondary">
+          <i class="fas fa-times"></i>
+          <span class="btn-text">Clear Filters</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="bookings-content">
+    <!-- DESKTOP ONLY: Table View (Hidden on Mobile) -->
+    <div class="desktop-table desktop-only">
+      <div class="table-wrapper">
+        <table class="bookings-table">
+          <thead>
+            <tr>
+              <th class="room-header">
+                <i class="fas fa-door-open"></i>
+                Room Details
+              </th>
+              <th class="guest-header">
+                <i class="fas fa-user"></i>
+                Guest
+              </th>
+              <th class="checkin-header">
+                <i class="fas fa-play"></i>
+                Check-in
+              </th>
+              <th class="checkout-header">
+                <i class="fas fa-stop"></i>
+                Check-out
+              </th>
+              <th class="cost-header">
+                <i class="fas fa-rupee-sign"></i>
+                Total Cost
+              </th>
+              <th class="actions-header">
+                <i class="fas fa-cog"></i>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of bookings" class="booking-row">
+              <td class="room-cell">
+                <div class="room-details">
+                  <span class="room-number">Room {{ booking.room.roomNumber }}</span>
+                  <span class="room-type">{{ booking.room.roomType.typeName }}</span>
+                </div>
+              </td>
+              <td class="guest-cell">
+                <div class="guest-info">
+                  <i class="fas fa-envelope"></i>
+                  <span class="email-text">{{ booking.userEmail }}</span>
+                </div>
+              </td>
+              <td class="datetime-cell checkin-cell">
+                <div class="datetime">
+                  <span class="date">{{ booking.startTime | date:'MMM dd, yyyy' }}</span>
+                  <small class="time">{{ booking.startTime | date:'h:mm a' }}</small>
+                </div>
+              </td>
+              <td class="datetime-cell checkout-cell">
+                <div class="datetime">
+                  <span class="date">{{ booking.endTime | date:'MMM dd, yyyy' }}</span>
+                  <small class="time">{{ booking.endTime | date:'h:mm a' }}</small>
+                </div>
+              </td>
+              <td class="cost-cell">
+                <div class="cost">
+                  <span class="price">{{ booking.totalCost | currency:'INR':'symbol':'1.0-0' }}</span>
+                </div>
+              </td>
+              <td class="actions-cell">
+                <div class="action-buttons">
+                  <button [routerLink]="['/bookings/edit', booking.id]" 
+                          class="btn btn-action btn-edit desktop-only"
+                          title="Edit Booking">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button (click)="cancelBooking(booking.id)" 
+                          class="btn btn-action btn-delete desktop-only"
+                          title="Cancel Booking">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="bookings.length === 0" class="no-data-row">
+              <td colspan="6">
+                <div class="no-data">
+                  <i class="fas fa-calendar-times"></i>
+                  <h3>No Bookings Found</h3>
+                  <p>Try adjusting your filters or create a new booking</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MOBILE ONLY: Card View (Hidden on Desktop) -->
+    <div class="mobile-cards mobile-only">
+      <div *ngFor="let booking of bookings" class="booking-card">
+        <div class="card-header">
+          <div class="room-badge">
+            <i class="fas fa-door-open"></i>
+            <span>Room {{ booking.room.roomNumber }}</span>
+          </div>
+          <div class="type-badge">
+            {{ booking.room.roomType.typeName }}
+          </div>
+        </div>
+
+        <div class="card-content">
+          <div class="guest-section">
+            <div class="section-label">
+              <i class="fas fa-user"></i>
+              Guest Email
+            </div>
+            <div class="section-value">{{ booking.userEmail }}</div>
+          </div>
+
+          <div class="datetime-section">
+            <div class="checkin">
+              <div class="section-label">
+                <i class="fas fa-play"></i>
+                Check-in
+              </div>
+              <div class="section-value">
+                <span class="date">{{ booking.startTime | date:'MMM dd, yyyy' }}</span>
+                <small>{{ booking.startTime | date:'h:mm a' }}</small>
+              </div>
+            </div>
+            <div class="checkout">
+              <div class="section-label">
+                <i class="fas fa-stop"></i>
+                Check-out
+              </div>
+              <div class="section-value">
+                <span class="date">{{ booking.endTime | date:'MMM dd, yyyy' }}</span>
+                <small>{{ booking.endTime | date:'h:mm a' }}</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="cost-section">
+            <div class="section-label">
+              <i class="fas fa-rupee-sign"></i>
+              Total Cost
+            </div>
+            <div class="section-value price">
+              {{ booking.totalCost | currency:'INR':'symbol':'1.0-0' }}
+            </div>
+          </div>
+        </div>
+
+        <!-- MOBILE ONLY: Card Actions (Hidden on Desktop) -->
+        <div class="card-actions mobile-only">
+          <a [routerLink]="['/bookings/edit', booking.id]" 
+             class="btn btn-secondary mobile-edit-btn">
+            <i class="fas fa-edit"></i>
+            <span>Edit</span>
+          </a>
+          <button (click)="cancelBooking(booking.id)" 
+                  class="btn btn-danger mobile-cancel-btn">
+            <i class="fas fa-trash"></i>
+            <span>Cancel</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MOBILE ONLY: No Data State -->
+      <div *ngIf="bookings.length === 0" class="no-data-mobile mobile-only">
+        <i class="fas fa-calendar-times"></i>
+        <h3>No Bookings Found</h3>
+        <p>Try adjusting your filters or create a new booking</p>
+      </div>
+    </div>
+  </div>
+</div>

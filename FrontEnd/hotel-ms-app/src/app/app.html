@@ -1,0 +1,42 @@
+<!-- Notification Component -->
+<app-notification></app-notification>
+
+<!-- Modern Navigation -->
+<nav class="modern-navbar">
+  <div class="navbar-container">
+    <!-- Brand/Logo -->
+    <a class="navbar-brand" routerLink="/">
+      <div class="brand-icon">
+        <i class="fas fa-hotel"></i>
+      </div>
+      <span class="brand-text">Hotel MS</span>
+    </a>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/bookings" routerLinkActive="active">
+            <i class="fas fa-calendar-check"></i>
+            <span>Bookings</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content Area -->
+<main class="main-content">
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
