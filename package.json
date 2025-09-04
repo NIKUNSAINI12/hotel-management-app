@@ -1,0 +1,8 @@
+{
+  "name": "hotel-ms-root",
+  "version": "1.0.0",
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  }
+}
