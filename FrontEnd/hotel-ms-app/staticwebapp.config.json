@@ -1,5 +1,6 @@
 {
-  "platform": {
-    "apiRuntime": "node:20"
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["*.{css,scss,js,png,jpg,gif,svg}"]
   }
 }
