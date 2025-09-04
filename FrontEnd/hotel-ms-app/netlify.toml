@@ -1,0 +1,9 @@
+[build]
+  command = "ng build"
+  publish = "dist/hotel-ms-app/browser"
+  base = "FrontEnd/hotel-ms-app"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
