@@ -1,3 +1,8 @@
+[build]
+  base    = "FrontEnd/hotel-ms-app/"
+  command = "ng build"
+  publish = "dist/hotel-ms-app/browser/"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
