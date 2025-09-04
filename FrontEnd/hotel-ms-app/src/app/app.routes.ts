@@ -5,7 +5,7 @@ import { BookingFormComponent } from './features/booking-form/booking-form';
 
 export const routes: Routes = [
     // Default route, redirects to the home component
-    
+    { path: '', redirectTo: '/bookings', pathMatch: 'full' },
 
     // Route to display the list of all bookings
     { path: 'bookings', component: BookingListComponent },

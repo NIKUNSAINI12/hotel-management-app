@@ -1,5 +1,4 @@
 <div class="bookings-container">
-  <!-- Header with Responsive Create Button -->
   <div class="bookings-header">
     <div class="header-content">
       <div class="header-icon">
@@ -11,13 +10,11 @@
       </div>
     </div>
     <div class="header-actions">
-      <!-- DESKTOP ONLY: Create Button (Hidden on Mobile) -->
       <button routerLink="/bookings/new" class="btn btn-primary create-booking-desktop desktop-only">
         <i class="fas fa-plus"></i>
         <span class="btn-text"> Create New Booking</span>
       </button>
       
-      <!-- MOBILE ONLY: Create Button (Hidden on Desktop) -->
       <button routerLink="/bookings/new" class="btn btn-primary create-booking-mobile mobile-only">
         <i class="fas fa-plus"></i>
         <span class="btn-text"> Create Booking</span>
@@ -25,7 +22,6 @@
     </div>
   </div>
 
-  <!-- Filters Section -->
   <div class="filters-wrapper">
     <form [formGroup]="filterForm" class="filters-form">
       <div class="filters-header">
@@ -101,7 +97,6 @@
   </div>
 
   <div class="bookings-content">
-    <!-- DESKTOP ONLY: Table View (Hidden on Mobile) -->
     <div class="desktop-table desktop-only">
       <div class="table-wrapper">
         <table class="bookings-table">
@@ -193,7 +188,6 @@
       </div>
     </div>
 
-    <!-- MOBILE ONLY: Card View (Hidden on Desktop) -->
     <div class="mobile-cards mobile-only">
       <div *ngFor="let booking of bookings" class="booking-card">
         <div class="card-header">
@@ -247,24 +241,22 @@
               {{ booking.totalCost | currency:'INR':'symbol':'1.0-0' }}
             </div>
           </div>
-        </div>
-
-        <!-- MOBILE ONLY: Card Actions (Hidden on Desktop) -->
-        <div class="card-actions mobile-only">
-          <a [routerLink]="['/bookings/edit', booking.id]" 
-             class="btn btn-secondary mobile-edit-btn">
-            <i class="fas fa-edit"></i>
-            <span>Edit</span>
-          </a>
-          <button (click)="cancelBooking(booking.id)" 
-                  class="btn btn-danger mobile-cancel-btn">
-            <i class="fas fa-trash"></i>
-            <span>Cancel</span>
-          </button>
+          
+          <div class="card-actions mobile-only">
+            <a [routerLink]="['/bookings/edit', booking.id]" 
+               class="btn btn-secondary mobile-edit-btn">
+              <i class="fas fa-edit"></i>
+              <span>Edit</span>
+            </a>
+            <button (click)="cancelBooking(booking.id)" 
+                    class="btn btn-danger mobile-cancel-btn">
+              <i class="fas fa-trash"></i>
+              <span>Cancel</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      <!-- MOBILE ONLY: No Data State -->
       <div *ngIf="bookings.length === 0" class="no-data-mobile mobile-only">
         <i class="fas fa-calendar-times"></i>
         <h3>No Bookings Found</h3>

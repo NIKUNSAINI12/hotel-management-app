@@ -1451,3 +1451,21 @@ $border-radius-xl: 16px;
     }
   }
 }
+.card-actions {
+  display: flex; /* Tells the container to manage its children in a row */
+  justify-content: space-between; /* Puts space between the items */
+  gap: 1rem; /* Ensures there's a gap between buttons (e.g., 16px) */
+  padding: 1rem; /* Adds space inside the container, around the buttons */
+  border-top: 1px solid #eee; /* Optional: Adds a nice separator line */
+}
+
+/* Optional: Make sure the buttons take up available space */
+.card-actions .btn {
+  flex-grow: 1; /* Allows buttons to grow and fill the space */
+  text-align: center; /* Ensures text is centered in the button */
+}
+.bookings-container {
+  max-width: 1400px; /* Increase this value to make it wider */
+  width: 110%;       /* Ensures it doesn't touch the screen edges on smaller views */
+  margin: 0 auto;   /* Centers the container on the page */
+}
