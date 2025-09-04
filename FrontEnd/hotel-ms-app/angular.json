@@ -37,14 +37,7 @@
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
-            "prerender": {
-              "discoverRoutes": true,
-              "routes": {
-                "exclude": [
-                  "/bookings/edit/:id"
-                ]
-              }
-            },
+            "prerender": false,
             "ssr": {
               "entry": "src/server.ts"
             }
