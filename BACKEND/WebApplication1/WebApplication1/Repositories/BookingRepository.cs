@@ -39,7 +39,8 @@ namespace WebApplication1.Repositories
                         return booking;
                     },
                     parameters,
-                    splitOn: "Id,Id",
+                    // Use the unique aliases to tell Dapper where to split the data
+                    splitOn: "Room_Id,RoomType_Id",
                     commandType: CommandType.StoredProcedure);
 
                 return bookings;
@@ -49,22 +50,28 @@ namespace WebApplication1.Repositories
         public async Task<Booking> GetByIdAsync(int id)
         {
             var procedureName = "sp_GetBookingById";
-            var parameters = new DynamicParameters();
-            parameters.Add("Id", id, DbType.Int32);
+            var parameters = new { Id = id };
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                var booking = await connection.QueryAsync<Booking, Room, RoomType, Booking>(
+                var bookings = await connection.QueryAsync<Booking, Room, RoomType, Booking>(
                     procedureName,
-                    (b, r, rt) => { r.RoomType = rt; b.Room = r; return b; },
+                    (booking, room, roomType) =>
+                    {
+                        room.RoomType = roomType;
+                        booking.Room = room;
+                        return booking;
+                    },
                     parameters,
-                    splitOn: "Id,Id",
-                    commandType: CommandType.StoredProcedure);
+                    // The splitOn parameter now correctly matches the aliases in the procedure
+                    splitOn: "Room_Id,RoomType_Id",
+                    commandType: CommandType.StoredProcedure
+                );
 
-                return booking.FirstOrDefault();
+                // Return the first booking found, or null if not found
+                return bookings.FirstOrDefault();
             }
         }
-
         public async Task<bool> UpdateAsync(Booking booking)
         {
             var procedureName = "sp_UpdateBooking";

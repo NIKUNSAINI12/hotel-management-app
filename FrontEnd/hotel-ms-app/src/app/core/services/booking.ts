@@ -39,7 +39,7 @@ export interface BookingFilter {
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl = 'https://webapplication120250904232050-b8fteqhvgfdbbde8.canadacentral-01.azurewebsites.net/api/bookings'; // Hardcoded URL
+  private apiUrl = 'https://webapplication120250904232050-b8fteqhvgfdbbde8.canadacentral-01.azurewebsites.net/api/Bookings'; // Hardcoded URL
 
   constructor(private http: HttpClient) { }
 

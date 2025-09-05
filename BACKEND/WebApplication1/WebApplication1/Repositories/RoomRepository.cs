@@ -34,7 +34,8 @@ namespace WebApplication1.Repositories // Make sure this namespace matches your 
                         room.RoomType = roomType;
                         return room;
                     },
-                    splitOn: "Id",
+                    // The corrected splitOn parameter must match the unique alias in your SQL procedure.
+                    splitOn: "RoomType_Id",
                     commandType: CommandType.StoredProcedure);
 
                 return rooms;
