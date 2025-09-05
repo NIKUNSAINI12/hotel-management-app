@@ -20,7 +20,7 @@ export interface Room {
   providedIn: 'root'
 })
 export class RoomService {
-  private apiUrl = 'https://localhost:7060/api/Rooms'; // Hardcoded URL
+  private apiUrl = 'https://webapplication120250904232050-b8fteqhvgfdbbde8.canadacentral-01.azurewebsites.net/api/Rooms'; // Hardcoded URL
 
   constructor(private http: HttpClient) { }
 

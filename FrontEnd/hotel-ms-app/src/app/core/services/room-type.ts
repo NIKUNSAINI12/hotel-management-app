@@ -12,7 +12,7 @@ export interface RoomType {
   providedIn: 'root' // This line is crucial
 })
 export class RoomTypeService {
-  private apiUrl = 'https://localhost:7060/api/Rooms/types';
+  private apiUrl = 'https://webapplication120250904232050-b8fteqhvgfdbbde8.canadacentral-01.azurewebsites.net/api/Rooms/types';
 
   constructor(private http: HttpClient) { }
 
